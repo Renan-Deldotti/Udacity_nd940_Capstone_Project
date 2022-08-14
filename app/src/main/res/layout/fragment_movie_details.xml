@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.moviedetails.MovieDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/movie_details_poster"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@string/movie_detail_poster"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_movies" />
+
+        <TextView
+            android:id="@+id/movie_details_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normal_margin_padding_size"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_poster"
+            tools:text="Avengers" />
+
+        <TextView
+            android:id="@+id/movie_details_tagline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normal_margin_padding_size"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_title"
+            tools:text="The heroes group" />
+
+        <TextView
+            android:id="@+id/movie_details_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normal_margin_padding_size"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_tagline"
+            tools:text="@string/lipsum_text_holder" />
+
+        <TextView
+            android:id="@+id/movie_details_release_date"
+            style="@style/DetailsCustomTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_overview"
+            tools:text="Release date: 01-01-2020" />
+
+        <TextView
+            android:id="@+id/movie_details_runtime"
+            style="@style/DetailsCustomTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_release_date"
+            tools:text="120 minutes" />
+
+        <TextView
+            android:id="@+id/movie_details_genres_label"
+            style="@style/DetailsCustomLabelFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/genre_w_colon"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_runtime"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/movie_details_genres_values"
+            style="@style/DetailsCustomLabelValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_genres_label"
+            tools:text="Action\nHeroes" />
+
+        <TextView
+            android:id="@+id/movie_details_produced_by_label"
+            style="@style/DetailsCustomLabelFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/produced_by"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_genres_values"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/movie_details_produced_by_values"
+            style="@style/DetailsCustomLabelValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/big_margin_padding_size"
+            app:layout_constraintTop_toBottomOf="@id/movie_details_produced_by_label"
+            tools:text="Marvel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

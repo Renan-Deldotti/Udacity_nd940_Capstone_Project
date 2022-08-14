@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DetailsCustomTextView" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:padding">@dimen/normal_margin_padding_size</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="maxLines">1</item>
+    </style>
+
+    <style name="DetailsCustomLabelFields" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:paddingHorizontal">@dimen/normal_margin_padding_size</item>
+        <item name="android:paddingTop">@dimen/normal_margin_padding_size</item>
+        <item name="android:paddingBottom">@dimen/textFieldsLabelsBottomMargin</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="DetailsCustomLabelValues" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:layout_marginHorizontal">@dimen/big_margin_padding_size</item>
+    </style>
+</resources>

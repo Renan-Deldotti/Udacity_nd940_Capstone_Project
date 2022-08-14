@@ -8,4 +8,12 @@
     <string name="favorites">Favorites</string>
     <string name="settings">Settings</string>
     <string name="about">About the app</string>
+    <string name="load_more_movies">Load more movies</string>
+    <string name="movie_details">Movie details</string>
+    <string name="movie_detail_poster">Movie detail poster</string>
+    <string name="lipsum_text_holder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non tortor sit amet odio iaculis sagittis. Nunc dignissim tincidunt suscipit. Donec venenatis fringilla libero in sagittis. Curabitur dictum ipsum et quam porta, vel posuere lacus consequat. Nunc in sapien finibus, interdum lectus quis, tempor lectus. Aenean eleifend id eros at vestibulum. Nam magna libero, convallis quis pretium lobortis, cursus eu metus. Quisque sit amet maximus tellus. Duis egestas mi nulla, sed aliquet nunc faucibus sed. Cras elit mi, rhoncus ac imperdiet ullamcorper, interdum in purus. Integer id tortor id quam volutpat posuere.</string>
+    <string name="release_date_w_colon">Release date: %1$s</string>
+    <string name="genre_w_colon">Genre:</string>
+    <string name="produced_by">Produced by:</string>
+
 </resources>

@@ -9,5 +9,20 @@
         android:id="@+id/nav_movies"
         android:name="com.test.watched.ui.movieslist.MoviesListFragment"
         android:label="@string/movies"
-        tools:layout="@layout/fragment_movies_list" />
+        tools:layout="@layout/fragment_movies_list">
+        <action
+            android:id="@+id/action_nav_movies_to_movieDetailsFragment"
+            app:destination="@id/nav_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_details"
+        android:name="com.test.watched.ui.moviedetails.MovieDetailsFragment"
+        android:label="@string/movie_details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>
