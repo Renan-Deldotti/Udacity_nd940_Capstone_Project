@@ -15,5 +15,9 @@
     <string name="release_date_w_colon">Release date: %1$s</string>
     <string name="genre_w_colon">Genre:</string>
     <string name="produced_by">Produced by:</string>
+    <string name="like_button_cD">Like button</string>
+    <string name="set_as_watched_button_cd">Set as watched button</string>
+    <string name="watched">Watched</string>
+    <string name="like">Like</string>
 
 </resources>
