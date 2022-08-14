@@ -1,8 +1,8 @@
-package com.test.pokehelp.data.retrofit
+package com.test.watched.data.retrofit
 
-import com.test.pokehelp.data.datamodels.Movie
-import com.test.pokehelp.data.datamodels.MoviesList
-import com.test.pokehelp.utils.Constants
+import com.test.watched.data.datamodels.Movie
+import com.test.watched.data.datamodels.MoviesList
+import com.test.watched.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -24,16 +24,16 @@ interface FetchAPI {
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Query("api_key") api_key:String = Constants.API_KEY,
+        @Query("api_key") api_key: String = Constants.API_KEY,
         @Query("language") language: String = "en-US",
         @Query("page") page: String = "1"
-    ) : MoviesList
+    ): MoviesList
 
     @GET("movie/{movieId}")
     suspend fun getMovieById(
         @Path("movieId") movieId: String,
-        @Query("api_key") apiKey:String = Constants.API_KEY,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = "en-US"
-    ) : Movie
+    ): Movie
 
 }

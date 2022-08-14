@@ -1,4 +1,4 @@
-package com.test.pokehelp.data.datamodels
+package com.test.watched.data.datamodels
 
 import com.google.gson.annotations.SerializedName
 

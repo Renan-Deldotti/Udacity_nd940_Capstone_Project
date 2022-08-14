@@ -1,4 +1,4 @@
-package com.test.pokehelp
+package com.test.watched
 
 import org.junit.Test
 
