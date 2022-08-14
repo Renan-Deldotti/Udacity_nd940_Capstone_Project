@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="single_item_poster_size">96dp</dimen>
+    <dimen name="small_margin_padding_size">4dp</dimen>
+    <dimen name="normal_margin_padding_size">8dp</dimen>
+</resources>

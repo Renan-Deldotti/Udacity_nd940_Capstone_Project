@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/smi_poster_preview"
+        android:layout_width="@dimen/single_item_poster_size"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/small_margin_padding_size"
+        android:contentDescription="@string/smI_poster_preview_cd"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_movies" />
+
+    <TextView
+        android:id="@+id/smi_title_preview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normal_margin_padding_size"
+        android:maxLines="2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBottom_toTopOf="@id/smi_release_date_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/smi_poster_preview"
+        app:layout_constraintTop_toTopOf="@id/smi_poster_preview"
+        tools:text="Avengers" />
+
+    <TextView
+        android:id="@+id/smi_release_date_preview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normal_margin_padding_size"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@id/smi_poster_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/smi_poster_preview"
+        app:layout_constraintTop_toBottomOf="@id/smi_title_preview"
+        tools:text="2022-01-01" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
