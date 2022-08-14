@@ -13,11 +13,12 @@
     <string name="movie_detail_poster">Movie detail poster</string>
     <string name="lipsum_text_holder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non tortor sit amet odio iaculis sagittis. Nunc dignissim tincidunt suscipit. Donec venenatis fringilla libero in sagittis. Curabitur dictum ipsum et quam porta, vel posuere lacus consequat. Nunc in sapien finibus, interdum lectus quis, tempor lectus. Aenean eleifend id eros at vestibulum. Nam magna libero, convallis quis pretium lobortis, cursus eu metus. Quisque sit amet maximus tellus. Duis egestas mi nulla, sed aliquet nunc faucibus sed. Cras elit mi, rhoncus ac imperdiet ullamcorper, interdum in purus. Integer id tortor id quam volutpat posuere.</string>
     <string name="release_date_w_colon">Release date: %1$s</string>
+    <string name="runtime_w_colon">Duration: %1$s minutes</string>
     <string name="genre_w_colon">Genre:</string>
     <string name="produced_by">Produced by:</string>
     <string name="like_button_cD">Like button</string>
     <string name="set_as_watched_button_cd">Set as watched button</string>
     <string name="watched">Watched</string>
     <string name="like">Like</string>
-
+    <string name="no_title">No title found</string>
 </resources>

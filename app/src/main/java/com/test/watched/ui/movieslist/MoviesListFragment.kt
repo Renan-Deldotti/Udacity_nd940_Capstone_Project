@@ -38,7 +38,7 @@ class MoviesListFragment : Fragment() {
 
         moviesListAdapter = MoviesListAdapter(MoviesListAdapter.MoviesListItemListener {
             val movieId = it.id ?: -1
-            Log.d(TAG, "onCreateView: should move to $movieId")
+            Log.d(TAG, "onCreateView: move to $movieId")
             if (movieId != -1) {
                 findNavController().navigate(MoviesListFragmentDirections.actionNavMoviesToMovieDetailsFragment(movieId))
             } else {
