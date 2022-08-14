@@ -3,8 +3,16 @@ package com.test.watched
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.test.watched.data.retrofit.RetrofitInstance
+import com.test.watched.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,11 +20,31 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
     }
 
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
+    private lateinit var configuration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        setSupportActionBar(binding.activityMainToolbar)
+
+        setContentView(binding.root)
+
+        navController = findNavController(R.id.fragmentNavHost)
+        configuration = AppBarConfiguration(
+            setOf(R.id.nav_movies, R.id.nav_tv_series, R.id.nav_favorites, R.id.nav_settings, R.id.nav_about),
+            binding.drawerLayout)
+        setupActionBarWithNavController(navController, configuration)
+        binding.navigationView.setupWithNavController(navController)
 
         lifecycleScope.launchWhenCreated { tryit() }
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(configuration) || super.onSupportNavigateUp()
     }
 
     suspend fun tryit() {
