@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.test.watched.R
 import com.test.watched.data.datamodels.ShortMovieInfo
-import com.test.watched.data.db.ShortMovieInfoDatabase
-import com.test.watched.data.db.ShortMovieRepository
+import com.test.watched.data.db.MoviesDatabase
+import com.test.watched.data.db.MoviesRepository
 import com.test.watched.utils.Constants
 import com.test.watched.utils.getAppSharedPreferences
 import kotlinx.coroutines.launch
@@ -16,8 +16,8 @@ import java.lang.Exception
 
 class MoviesListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = ShortMovieInfoDatabase.getInstance(application)
-    private val repository = ShortMovieRepository(database)
+    private val database = MoviesDatabase.getInstance(application)
+    private val repository = MoviesRepository(database)
     private var filterResults = true
 
     init {

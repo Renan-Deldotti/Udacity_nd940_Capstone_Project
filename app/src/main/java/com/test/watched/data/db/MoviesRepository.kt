@@ -7,7 +7,7 @@ import com.test.watched.data.retrofit.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ShortMovieRepository(private val database: ShortMovieInfoDatabase) {
+class MoviesRepository(private val database: MoviesDatabase) {
 
     suspend fun fetchMoviesFromApi(page: Int, filterResults: Boolean) {
         if (page > 1000) {
@@ -36,6 +36,6 @@ class ShortMovieRepository(private val database: ShortMovieInfoDatabase) {
     val allShortMovieInfo: LiveData<List<ShortMovieInfo>> = database.shortMovieInfoDao.getAllShortMovieInfo()
 
     companion object {
-        private const val TAG = "ShortMovieRepository"
+        private const val TAG = "MoviesRepository"
     }
 }
