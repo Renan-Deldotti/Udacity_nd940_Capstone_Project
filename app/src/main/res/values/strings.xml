@@ -26,4 +26,6 @@
     <string name="filter_movies_switch_text">Filter movies with 18+ target</string>
     <string name="allow_notifications_switch_text">Allow notifications</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="favorite">Favorite</string>
+    <string name="favorite_button_cd">Favorite button</string>
 </resources>

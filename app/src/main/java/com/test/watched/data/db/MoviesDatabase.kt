@@ -6,15 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.test.watched.data.datamodels.Converters
+import com.test.watched.data.datamodels.Favorites
 import com.test.watched.data.datamodels.Movie
 import com.test.watched.data.datamodels.ShortMovieInfo
 
-@Database(entities = [ShortMovieInfo::class, Movie::class], version = 1, exportSchema = false)
+@Database(entities = [ShortMovieInfo::class, Movie::class, Favorites::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MoviesDatabase : RoomDatabase() {
 
     abstract val shortMovieInfoDao: ShortMovieInfoDao
     abstract val movieDao: MovieDao
+    abstract val favoritesDao: FavoritesDao
 
     companion object {
         @Volatile

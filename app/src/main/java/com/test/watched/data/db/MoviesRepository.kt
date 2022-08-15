@@ -2,6 +2,7 @@ package com.test.watched.data.db
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.test.watched.data.datamodels.Favorites
 import com.test.watched.data.datamodels.Movie
 import com.test.watched.data.datamodels.ShortMovieInfo
 import com.test.watched.data.retrofit.RetrofitInstance
@@ -56,6 +57,16 @@ class MoviesRepository(private val database: MoviesDatabase) {
     }
 
     val allMoviesData: LiveData<List<Movie>> = database.movieDao.getAllMovies()
+
+    suspend fun insertFavoriteMovie(movie: Movie) {
+        withContext(Dispatchers.IO) {
+            database.favoritesDao.insertFavoriteMovie(Favorites(movie.id!!))
+            movie.isFavorite = true
+            database.movieDao.insertMovie(movie)
+        }
+    }
+
+    val allFavoriteMoviesInfo: LiveData<List<Favorites>> = database.favoritesDao.getAllFavoritesInfo()
 
     companion object {
         private const val TAG = "MoviesRepository"

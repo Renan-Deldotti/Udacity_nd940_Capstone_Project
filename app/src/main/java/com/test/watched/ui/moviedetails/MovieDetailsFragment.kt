@@ -55,15 +55,19 @@ class MovieDetailsFragment : Fragment() {
             binding.movieDetailsPoster.setImageDrawable(AppCompatResources.getDrawable(binding.movieDetailsPoster.context, R.drawable.ic_movies))
         }
 
-        binding.movieDetailsWatchedButton.setOnClickListener {
+        binding.movieDetailsWatchButton.setOnClickListener {
             Log.d(TAG, "getMovieData: Add to watched")
         }
 
-        binding.movieDetailsLikeButton.setOnClickListener {
+        Log.d(TAG, "setMovieData: is favorite: ${data.isFavorite}")
+
+        binding.movieDetailsFavoriteButton.setOnClickListener {
             Log.d(TAG, "getMovieData: Add to favorites")
+            viewModel.saveFavorite(data)
         }
-        binding.movieDetailsWatchedButton.visibility = View.VISIBLE
-        binding.movieDetailsLikeButton.visibility = View.VISIBLE
+        
+        binding.movieDetailsWatchButton.visibility = View.VISIBLE
+        binding.movieDetailsFavoriteButton.visibility = View.VISIBLE
 
         // Some movies does not have the data set, so just put an empty string
         binding.movieDetailsTitle.text = data.originalTitle ?: getString(R.string.no_title)

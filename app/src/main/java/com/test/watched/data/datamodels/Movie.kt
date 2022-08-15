@@ -19,7 +19,9 @@ data class Movie(
     @SerializedName("production_companies") @Expose var productionCompanies: ArrayList<ProductionCompanies> = arrayListOf(),
     @SerializedName("release_date") @Expose var releaseDate: String? = null,
     @SerializedName("runtime") @Expose var runtime: Int? = null,
-    @SerializedName("tagline") @Expose var tagline: String? = null
+    @SerializedName("tagline") @Expose var tagline: String? = null,
+    var isFavorite: Boolean = false,
+    var isWatched:Boolean = false
 )
 
 /**

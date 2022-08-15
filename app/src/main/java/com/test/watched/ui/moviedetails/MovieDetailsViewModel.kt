@@ -35,4 +35,10 @@ class MovieDetailsViewModel(application: Application) : AndroidViewModel(applica
             _movieData.value = repository.getMovieById(movieId)
         }
     }
+
+    fun saveFavorite(movieToSave: Movie) {
+        viewModelScope.launch {
+            repository.insertFavoriteMovie(movieToSave)
+        }
+    }
 }
