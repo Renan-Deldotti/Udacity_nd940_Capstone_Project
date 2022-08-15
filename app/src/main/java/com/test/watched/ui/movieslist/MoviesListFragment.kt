@@ -7,17 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.watched.R
-import com.test.watched.data.datamodels.ShortMovieInfo
-import com.test.watched.data.retrofit.RetrofitInstance
 import com.test.watched.databinding.FragmentMoviesListBinding
-import com.test.watched.utils.Constants
-import com.test.watched.utils.getAppSharedPreferences
-import kotlinx.coroutines.launch
 
 /**
  * Fragment containing a RecyclerView that displays a list of Movies
@@ -26,7 +21,7 @@ class MoviesListFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesListBinding
     private lateinit var moviesListAdapter: MoviesListAdapter
-    private var currentPage = 0
+    private val viewModel: MoviesListViewModel by viewModels()
 
     companion object {
         private const val TAG = "MoviesListFragment"
@@ -50,7 +45,9 @@ class MoviesListFragment : Fragment() {
 
         binding.moviesListRecyclerView.adapter = moviesListAdapter
 
-        lifecycleScope.launchWhenCreated { fetchItemsFromAPI() }
+        viewModel.shortMovieInfos.observe(viewLifecycleOwner) {
+            moviesListAdapter.submitList(it)
+        }
 
         // Make the list endless
         binding.moviesListRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
@@ -62,48 +59,16 @@ class MoviesListFragment : Fragment() {
                 // Check if we should load new items
                 val shouldLoad = totalItems > 1 && lastVisibleItem == (totalItems -1)
                 if (shouldLoad) {
-                    Log.d(TAG, "onCreateView load new items")
-                    lifecycleScope.launch { fetchItemsFromAPI() }
+                    // The next page should be calculated by dividing the current amount
+                    // by the number of items per request
+                    val currentPage = totalItems / 20
+                    val nextPage = currentPage + 1
+                    Log.d(TAG, "onScrolled load new items for page: $nextPage")
+                    viewModel.loadNewMovieShortInfo(nextPage)
                 }
             }
         })
 
         return binding.root
-    }
-
-    private var moviesList = arrayListOf<ShortMovieInfo>()
-
-    private suspend fun fetchItemsFromAPI() {
-        // Max allowed by API is 1000
-        if (currentPage > 1000) {
-            Log.d(TAG, "fetchItemsFromAPI: max items loaded, returning")
-            return
-        }
-        currentPage++
-
-        val moviesResult = RetrofitInstance.api.getPopularMovies(page = currentPage.toString())
-        val unfilteredMoviesList = moviesResult.results
-
-        // Check if user set to filter the results
-        val shouldFilterAdult = requireContext().getAppSharedPreferences().getBoolean(Constants.FILTER_ADULT_MOVIES_PREF_KEY, true)
-
-        if (unfilteredMoviesList.isNotEmpty()) {
-            val resultList = if (shouldFilterAdult) {
-                val filteredList = unfilteredMoviesList.filter {
-                    it.adult == false
-                }
-                moviesList + filteredList
-            } else {
-                moviesList + unfilteredMoviesList
-            }
-            moviesList = resultList as ArrayList<ShortMovieInfo>
-            moviesListAdapter.submitList(moviesList)
-        } else {
-            // No movies found
-            // Add a check if there is internet and if should load new movies
-            // otherwise show an icon about no movies
-        }
-
-        Log.d(TAG, "onCreateView: list size after fetch from page $currentPage: ${moviesList.size} was filtered:$shouldFilterAdult")
     }
 }
