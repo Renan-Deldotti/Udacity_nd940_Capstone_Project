@@ -2,12 +2,16 @@ package com.test.watched.data.db
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.test.watched.data.datamodels.Movie
 import com.test.watched.data.datamodels.ShortMovieInfo
 import com.test.watched.data.retrofit.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class MoviesRepository(private val database: MoviesDatabase) {
+
+    private var lastMovieId: Int = -1
 
     suspend fun fetchMoviesFromApi(page: Int, filterResults: Boolean) {
         if (page > 1000) {
@@ -34,6 +38,24 @@ class MoviesRepository(private val database: MoviesDatabase) {
     }
 
     val allShortMovieInfo: LiveData<List<ShortMovieInfo>> = database.shortMovieInfoDao.getAllShortMovieInfo()
+
+    suspend fun fetchMovieById(movieId: Int) {
+        withContext(Dispatchers.IO) {
+            lastMovieId = movieId
+            val movie = RetrofitInstance.api.getMovieById(movieId.toString())
+            database.movieDao.insertMovie(movie)
+        }
+    }
+
+    suspend fun getMovieById(movieId: Int) : Movie {
+        val movie:Movie
+        withContext(Dispatchers.IO) {
+            movie = database.movieDao.getMovieById(movieId)
+        }
+        return movie
+    }
+
+    val allMoviesData: LiveData<List<Movie>> = database.movieDao.getAllMovies()
 
     companion object {
         private const val TAG = "MoviesRepository"

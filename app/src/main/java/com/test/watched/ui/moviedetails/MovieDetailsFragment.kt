@@ -8,19 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.test.watched.R
+import com.test.watched.data.datamodels.Movie
 import com.test.watched.data.retrofit.RetrofitInstance
 import com.test.watched.databinding.FragmentMovieDetailsBinding
 import com.test.watched.utils.Constants
+import kotlinx.coroutines.flow.collect
 
 
 class MovieDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
     private val mdfArgs: MovieDetailsFragmentArgs by navArgs()
+    private val viewModel: MovieDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,18 +33,18 @@ class MovieDetailsFragment : Fragment() {
         binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
 
         val movieId = mdfArgs.movieId
+        viewModel.getDataForId(movieId)
 
-        lifecycleScope.launchWhenCreated {
-            getMovieData(movieId)
+        viewModel.movieData.observe(viewLifecycleOwner) {
+            setMovieData(it)
         }
 
         return binding.root
     }
 
-    suspend fun getMovieData(movieId: Int) {
-        val data = RetrofitInstance.api.getMovieById(movieId.toString())
+    private fun setMovieData(data: Movie) {
         val posterUrl = Constants.API_IMAGE_BASE_URL + data.posterPath
-        Log.d(TAG, "movieData for $movieId $posterUrl")
+        Log.d(TAG, "movieData for ${data.id} $posterUrl")
 
         if (Constants.API_IMAGE_BASE_URL != posterUrl) {
             Glide.with(binding.movieDetailsPoster)

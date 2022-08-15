@@ -1,14 +1,17 @@
 package com.test.watched.data.datamodels
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
  * Provide info about a single Movie item
  */
+@Entity(tableName = "movie_table")
 data class Movie(
     @SerializedName("genres") @Expose var genres: ArrayList<Genres> = arrayListOf(),
-    @SerializedName("id") @Expose var id: Int? = null,
+    @SerializedName("id") @Expose @PrimaryKey var id: Int? = null,
     @SerializedName("imdb_id") @Expose var imdbId: String? = null,
     @SerializedName("original_title") @Expose var originalTitle: String? = null,
     @SerializedName("overview") @Expose var overview: String? = null,

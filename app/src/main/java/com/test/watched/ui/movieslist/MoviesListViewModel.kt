@@ -33,7 +33,11 @@ class MoviesListViewModel(application: Application) : AndroidViewModel(applicati
 
     fun loadNewMovieShortInfo(page: Int) {
         viewModelScope.launch {
-            repository.fetchMoviesFromApi(page, filterResults)
+            try {
+                repository.fetchMoviesFromApi(page, filterResults)
+            } catch (e: Exception) {
+                Toast.makeText(getApplication(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
