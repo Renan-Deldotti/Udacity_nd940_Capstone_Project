@@ -22,4 +22,6 @@
     <string name="like">Like</string>
     <string name="no_title">No title found</string>
     <string name="about_app_more_info">Watched APP\ngithub.com/Renan-Deldotti</string>
+    <string name="filter_movies_switch_text">Filter movies with 18+ target</string>
+    <string name="allow_notifications_switch_text">Allow notifications</string>
 </resources>

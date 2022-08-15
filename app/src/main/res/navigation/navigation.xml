@@ -19,7 +19,7 @@
         android:id="@+id/nav_details"
         android:name="com.test.watched.ui.moviedetails.MovieDetailsFragment"
         android:label="@string/movie_details"
-        tools:layout="@layout/fragment_movie_details" >
+        tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="movieId"
             app:argType="integer" />
@@ -30,5 +30,11 @@
         android:name="com.test.watched.ui.about.AboutFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.test.watched.ui.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>

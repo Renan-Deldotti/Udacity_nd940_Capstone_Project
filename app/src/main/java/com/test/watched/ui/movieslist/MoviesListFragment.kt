@@ -15,6 +15,8 @@ import com.test.watched.R
 import com.test.watched.data.datamodels.ShortMovieInfo
 import com.test.watched.data.retrofit.RetrofitInstance
 import com.test.watched.databinding.FragmentMoviesListBinding
+import com.test.watched.utils.Constants
+import com.test.watched.utils.getAppSharedPreferences
 import kotlinx.coroutines.launch
 
 /**
@@ -81,10 +83,9 @@ class MoviesListFragment : Fragment() {
 
         val moviesResult = RetrofitInstance.api.getPopularMovies(page = currentPage.toString())
         val unfilteredMoviesList = moviesResult.results
-        //val resultList: List<ShortMovieInfo>?
 
-        // Force filter for tests, should add a check on Settings page to enable/disable this feature
-        val shouldFilterAdult = true
+        // Check if user set to filter the results
+        val shouldFilterAdult = requireContext().getAppSharedPreferences().getBoolean(Constants.FILTER_ADULT_MOVIES_PREF_KEY, true)
 
         if (unfilteredMoviesList.isNotEmpty()) {
             val resultList = if (shouldFilterAdult) {
