@@ -1,5 +1,7 @@
 package com.test.watched.data.retrofit
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.test.watched.data.datamodels.Movie
 import com.test.watched.data.datamodels.MoviesList
 import com.test.watched.utils.Constants
@@ -11,10 +13,12 @@ import retrofit2.http.Query
 
 object RetrofitInstance {
 
+    private val gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+
     val api: FetchAPI by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(FetchAPI::class.java)
     }

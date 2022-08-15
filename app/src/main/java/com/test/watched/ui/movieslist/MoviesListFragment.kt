@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.watched.R
 import com.test.watched.databinding.FragmentMoviesListBinding
 
 /**
@@ -34,7 +33,7 @@ class MoviesListFragment : Fragment() {
         binding = FragmentMoviesListBinding.inflate(inflater, container, false)
 
         moviesListAdapter = MoviesListAdapter(MoviesListAdapter.MoviesListItemListener {
-            val movieId = it.id ?: -1
+            val movieId = it.movieId ?: -1
             Log.d(TAG, "onCreateView: move to $movieId")
             if (movieId != -1) {
                 findNavController().navigate(MoviesListFragmentDirections.actionNavMoviesToMovieDetailsFragment(movieId))

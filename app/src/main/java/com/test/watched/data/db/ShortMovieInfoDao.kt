@@ -13,7 +13,7 @@ interface ShortMovieInfoDao {
     @Update
     suspend fun update(shortMovieInfo: ShortMovieInfo)
 
-    @Query("SELECT * from short_movie_info_table WHERE id = :id")
+    @Query("SELECT * from short_movie_info_table WHERE movieId = :id")
     fun getShortInfoById(id: Int) : LiveData<ShortMovieInfo>
 
     @Query("SELECT * from short_movie_info_table")

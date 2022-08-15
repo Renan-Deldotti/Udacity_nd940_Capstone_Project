@@ -2,6 +2,7 @@ package com.test.watched.data.datamodels
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -9,14 +10,16 @@ import com.google.gson.annotations.SerializedName
  */
 data class MoviesList(
     @SerializedName("results")
+    @Expose
     var results: ArrayList<ShortMovieInfo> = arrayListOf()
 )
 
 @Entity(tableName = "short_movie_info_table")
 data class ShortMovieInfo(
-    @SerializedName("adult") var adult: Boolean? = null,
-    @SerializedName("backdrop_path") var backdropPath: String? = null,
-    @SerializedName("id") @PrimaryKey() var id: Int? = null,
-    @SerializedName("original_title") var originalTitle: String? = null,
-    @SerializedName("release_date") var releaseDate: String? = null
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    @SerializedName("adult") @Expose var adult: Boolean? = null,
+    @SerializedName("backdrop_path") @Expose var backdropPath: String? = null,
+    @SerializedName("id") @Expose var movieId: Int? = null,
+    @SerializedName("original_title") @Expose var originalTitle: String? = null,
+    @SerializedName("release_date") @Expose var releaseDate: String? = null
 )

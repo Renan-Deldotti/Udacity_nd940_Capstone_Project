@@ -1,6 +1,5 @@
 package com.test.watched.ui.movieslist
 
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -55,7 +54,7 @@ class MoviesListAdapter(private val listener: MoviesListItemListener): ListAdapt
 
     companion object DiffCallBack: DiffUtil.ItemCallback<ShortMovieInfo>(){
         override fun areItemsTheSame(oldItem: ShortMovieInfo, newItem: ShortMovieInfo): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.movieId == newItem.movieId
         }
 
         override fun areContentsTheSame(oldItem: ShortMovieInfo, newItem: ShortMovieInfo): Boolean {
