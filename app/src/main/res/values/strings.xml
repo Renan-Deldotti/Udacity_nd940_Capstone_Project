@@ -19,6 +19,7 @@
     <string name="like_button_cD">Like button</string>
     <string name="set_as_watched_button_cd">Set as watched button</string>
     <string name="watched">Watched</string>
+    <string name="watch">Watch</string>
     <string name="like">Like</string>
     <string name="no_title">No title found</string>
     <string name="about_app_more_info">Watched APP\ngithub.com/Renan-Deldotti</string>

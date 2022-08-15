@@ -53,7 +53,7 @@
             android:contentDescription="@string/set_as_watched_button_cd"
             android:drawableTop="@drawable/ic_eye_watched"
             android:drawableTint="?attr/colorButtonNormal"
-            android:text="@string/watched"
+            android:text="@string/watch"
             android:textColor="?attr/colorButtonNormal"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/movie_details_like_button"
