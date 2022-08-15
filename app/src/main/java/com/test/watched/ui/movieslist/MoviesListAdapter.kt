@@ -54,7 +54,7 @@ class MoviesListAdapter(private val listener: MoviesListItemListener): ListAdapt
 
     companion object DiffCallBack: DiffUtil.ItemCallback<ShortMovieInfo>(){
         override fun areItemsTheSame(oldItem: ShortMovieInfo, newItem: ShortMovieInfo): Boolean {
-            return oldItem.movieId == newItem.movieId
+            return oldItem.shortMovieId == newItem.shortMovieId
         }
 
         override fun areContentsTheSame(oldItem: ShortMovieInfo, newItem: ShortMovieInfo): Boolean {

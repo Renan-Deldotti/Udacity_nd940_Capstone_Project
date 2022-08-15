@@ -19,7 +19,7 @@ data class ShortMovieInfo(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @SerializedName("adult") @Expose var adult: Boolean? = null,
     @SerializedName("backdrop_path") @Expose var backdropPath: String? = null,
-    @SerializedName("id") @Expose var movieId: Int? = null,
+    @SerializedName("id") @Expose var shortMovieId: Int? = null,
     @SerializedName("original_title") @Expose var originalTitle: String? = null,
     @SerializedName("release_date") @Expose var releaseDate: String? = null
 )
