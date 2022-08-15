@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.fragmentNavHost)
         configuration = AppBarConfiguration(
-            setOf(R.id.nav_movies, R.id.nav_tv_series, R.id.nav_favorites, R.id.nav_settings, R.id.nav_about),
+            setOf(R.id.nav_movies, R.id.nav_favorites, R.id.nav_settings, R.id.nav_about),
             binding.drawerLayout)
         setupActionBarWithNavController(navController, configuration)
         binding.navigationView.setupWithNavController(navController)

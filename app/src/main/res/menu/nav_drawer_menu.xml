@@ -9,14 +9,11 @@
             android:icon="@drawable/ic_movies"
             android:title="@string/movies" />
         <item
-            android:id="@+id/nav_tv_series"
-            android:icon="@drawable/ic_live_tv"
-            android:title="@string/tv_series" />
-        <item
             android:id="@+id/nav_favorites"
             android:icon="@drawable/ic_favorite"
             android:title="@string/favorites" />
     </group>
+
     <group
         android:id="@+id/menu_bottomMenu"
         android:checkableBehavior="single">
@@ -29,4 +26,5 @@
             android:icon="@drawable/ic_info"
             android:title="@string/about" />
     </group>
+
 </menu>
