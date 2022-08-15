@@ -14,6 +14,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoritesBinding
     private val viewModel: FavoritesViewModel by viewModels()
+    private lateinit var favoritesListAdapter: FavoritesListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,11 +22,24 @@ class FavoritesFragment : Fragment() {
     ): View {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
-        viewModel.favoritesMovies.observe(viewLifecycleOwner) { it ->
-            it.forEach {
-                Log.d(TAG, "onCreateView: $it")
+        favoritesListAdapter = FavoritesListAdapter(FavoritesListAdapter.FavoriteListItemListener {
+            Log.d(TAG, "onCreateView: Clicked ${it.id}")
+        })
+
+        binding.favoritesListRecyclerView.adapter = favoritesListAdapter
+
+        viewModel.favoritesMovies.observe(viewLifecycleOwner) { favoriteList ->
+            val idsList: List<Int> = favoriteList.map {
+                it.shortMovieInfoId
+            }
+            viewModel.favoritesMoviesShortInfo(*idsList.toIntArray()).observe(viewLifecycleOwner) { shortMovieInfoList ->
+                shortMovieInfoList.forEach { shortInfo ->
+                    Log.d(TAG, "onCreateView: ${shortInfo.originalTitle}")
+                }
+                favoritesListAdapter.submitList(shortMovieInfoList)
             }
         }
+
 
         return binding.root
     }

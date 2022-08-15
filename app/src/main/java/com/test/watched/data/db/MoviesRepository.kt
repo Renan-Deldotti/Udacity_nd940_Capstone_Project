@@ -68,6 +68,8 @@ class MoviesRepository(private val database: MoviesDatabase) {
 
     val allFavoriteMoviesInfo: LiveData<List<Favorites>> = database.favoritesDao.getAllFavoritesInfo()
 
+    fun getFavoriteMoviesListShortInfo(vararg moviesIds: Int) : LiveData<List<ShortMovieInfo>> = database.shortMovieInfoDao.getShortInfoByIdsAsList(*moviesIds)
+
     companion object {
         private const val TAG = "MoviesRepository"
     }

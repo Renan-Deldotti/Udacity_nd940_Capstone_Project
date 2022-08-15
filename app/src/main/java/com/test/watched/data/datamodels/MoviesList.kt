@@ -1,6 +1,7 @@
 package com.test.watched.data.datamodels
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -14,7 +15,7 @@ data class MoviesList(
     var results: ArrayList<ShortMovieInfo> = arrayListOf()
 )
 
-@Entity(tableName = "short_movie_info_table")
+@Entity(tableName = "short_movie_info_table", indices = arrayOf(Index(value = ["shortMovieId"], unique = true)))
 data class ShortMovieInfo(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @SerializedName("adult") @Expose var adult: Boolean? = null,

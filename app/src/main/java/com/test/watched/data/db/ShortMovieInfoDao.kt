@@ -16,6 +16,9 @@ interface ShortMovieInfoDao {
     @Query("SELECT * from short_movie_info_table WHERE shortMovieId = :id")
     fun getShortInfoById(id: Int) : LiveData<ShortMovieInfo>
 
+    @Query("SELECT * FROM short_movie_info_table WHERE shortMovieId IN (:ids)")
+    fun getShortInfoByIdsAsList(vararg ids:Int): LiveData<List<ShortMovieInfo>>
+
     @Query("SELECT * from short_movie_info_table")
     fun getAllShortMovieInfo() : LiveData<List<ShortMovieInfo>>
 
