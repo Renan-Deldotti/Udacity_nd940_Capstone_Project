@@ -1,6 +1,7 @@
 package com.test.watched.ui.movieslist
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -21,14 +22,8 @@ class MoviesListViewModel(application: Application) : AndroidViewModel(applicati
     private var filterResults = true
 
     init {
-        viewModelScope.launch {
-            try {
-                filterResults = application.getAppSharedPreferences().getBoolean(Constants.FILTER_ADULT_MOVIES_PREF_KEY, true)
-                repository.fetchMoviesFromApi(1, filterResults)
-            } catch (e: Exception) {
-                Toast.makeText(application.applicationContext, R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
-            }
-        }
+        filterResults = application.getAppSharedPreferences().getBoolean(Constants.FILTER_ADULT_MOVIES_PREF_KEY, true)
+        loadNewMovieShortInfo(1)
     }
 
     fun loadNewMovieShortInfo(page: Int) {
@@ -36,10 +31,20 @@ class MoviesListViewModel(application: Application) : AndroidViewModel(applicati
             try {
                 repository.fetchMoviesFromApi(page, filterResults)
             } catch (e: Exception) {
-                Toast.makeText(getApplication(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
+                if (page == 1) {
+                    // If this is for the first time we show the snackbar on MovieListFragment
+                    // instead of the toast
+                    Log.d(TAG, "No internet connection")
+                } else {
+                    Toast.makeText(getApplication(), R.string.no_internet_connection_load_more, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     val shortMovieInfos: LiveData<List<ShortMovieInfo>> = repository.allShortMovieInfo
+
+    companion object {
+        private const val TAG = "MoviesListViewModel"
+    }
 }

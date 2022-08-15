@@ -1,7 +1,9 @@
 package com.test.watched
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
@@ -11,8 +13,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.snackbar.Snackbar
 import com.test.watched.data.retrofit.RetrofitInstance
 import com.test.watched.databinding.ActivityMainBinding
+import com.test.watched.utils.hasInternetConnectivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,19 +43,19 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, configuration)
         binding.navigationView.setupWithNavController(navController)
 
-        lifecycleScope.launchWhenCreated { tryit() }
+        if (!hasInternetConnectivity()) {
+            // Show a snackbar about the connectivity
+            Snackbar.make(binding.root, R.string.no_internet_connection, Snackbar.LENGTH_LONG)
+                .setAction(R.string.turn_on){
+                    startActivity(Intent().apply {
+                        action = Settings.ACTION_WIFI_SETTINGS
+                    })
+                }.show()
+        }
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(configuration) || super.onSupportNavigateUp()
-    }
-
-    suspend fun tryit() {
-        val t = RetrofitInstance.api.getPopularMovies(page = "2")
-        Log.d(TAG, "tryit: $t")
-
-        val u = RetrofitInstance.api.getMovieById("616037")
-        Log.d(TAG, "tryit: $u")
     }
 }

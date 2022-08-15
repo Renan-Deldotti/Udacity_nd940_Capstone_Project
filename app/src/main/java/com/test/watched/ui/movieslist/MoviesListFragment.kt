@@ -1,6 +1,12 @@
 package com.test.watched.ui.movieslist
 
+import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +17,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.test.watched.MainActivity
+import com.test.watched.R
 import com.test.watched.databinding.FragmentMoviesListBinding
+import com.test.watched.utils.connectivityManager
+import com.test.watched.utils.hasInternetConnectivity
 
 /**
  * Fragment containing a RecyclerView that displays a list of Movies
@@ -21,6 +32,7 @@ class MoviesListFragment : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
     private lateinit var moviesListAdapter: MoviesListAdapter
     private val viewModel: MoviesListViewModel by viewModels()
+    private var nextPage: Int = 1
 
     companion object {
         private const val TAG = "MoviesListFragment"
@@ -34,11 +46,23 @@ class MoviesListFragment : Fragment() {
 
         moviesListAdapter = MoviesListAdapter(MoviesListAdapter.MoviesListItemListener {
             val movieId = it.shortMovieId ?: -1
-            Log.d(TAG, "onCreateView: move to $movieId")
-            if (movieId != -1) {
+            if (requireContext().hasInternetConnectivity()) {
+                Log.d(TAG, "onCreateView: move to $movieId")
+                if (movieId != -1) {
+                    findNavController().navigate(MoviesListFragmentDirections.actionNavMoviesToMovieDetailsFragment(movieId))
+                } else {
+                    Toast.makeText(context, "Invalid movieId $movieId", Toast.LENGTH_SHORT).show()
+                }
+            } else if(movieId != -1 && it.isFavorite) {
                 findNavController().navigate(MoviesListFragmentDirections.actionNavMoviesToMovieDetailsFragment(movieId))
             } else {
-                Toast.makeText(context, "Invalid movieId $movieId", Toast.LENGTH_SHORT).show()
+                // No data connectivity show the snackbar to let user know about internet
+                Snackbar.make(binding.root, R.string.no_internet_connection, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.turn_on){
+                        startActivity(Intent().apply {
+                            action = Settings.ACTION_WIFI_SETTINGS
+                        })
+                    }.show()
             }
         })
 
@@ -61,13 +85,38 @@ class MoviesListFragment : Fragment() {
                     // The next page should be calculated by dividing the current amount
                     // by the number of items per request
                     val currentPage = totalItems / 20
-                    val nextPage = currentPage + 1
-                    Log.d(TAG, "onScrolled load new items for page: $nextPage")
+                    nextPage = currentPage + 1
                     viewModel.loadNewMovieShortInfo(nextPage)
                 }
             }
         })
 
+        listenForNwChanges()
+
         return binding.root
+    }
+
+    private fun listenForNwChanges() {
+        // The user may change the connectivity through the notifications bar
+        // so we listen for this changes to adapt to all connectivity changes
+        val networkRequest = NetworkRequest.Builder().apply {
+            addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET)
+        }.build()
+
+        requireContext().connectivityManager.requestNetwork(networkRequest, object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                Log.d(TAG, "Connection succeed, fetch data")
+                viewModel.loadNewMovieShortInfo(nextPage)
+            }
+
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                Log.d(TAG, "Connection lost")
+            }
+        })
     }
 }

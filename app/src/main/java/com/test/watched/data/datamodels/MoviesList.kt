@@ -22,5 +22,6 @@ data class ShortMovieInfo(
     @SerializedName("backdrop_path") @Expose var backdropPath: String? = null,
     @SerializedName("id") @Expose var shortMovieId: Int? = null,
     @SerializedName("original_title") @Expose var originalTitle: String? = null,
-    @SerializedName("release_date") @Expose var releaseDate: String? = null
+    @SerializedName("release_date") @Expose var releaseDate: String? = null,
+    var isFavorite: Boolean = false
 )

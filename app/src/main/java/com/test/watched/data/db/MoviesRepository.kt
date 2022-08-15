@@ -63,6 +63,7 @@ class MoviesRepository(private val database: MoviesDatabase) {
             database.favoritesDao.insertFavoriteMovie(Favorites(movie.id!!))
             movie.isFavorite = true
             database.movieDao.insertMovie(movie)
+            database.shortMovieInfoDao.updateFavoriteStatus(true, movie.id!!)
         }
     }
 

@@ -13,6 +13,9 @@ interface ShortMovieInfoDao {
     @Update
     suspend fun update(shortMovieInfo: ShortMovieInfo)
 
+    @Query("UPDATE short_movie_info_table SET isFavorite=:isFavorited WHERE shortMovieId = :movieId")
+    suspend fun updateFavoriteStatus(isFavorited: Boolean, movieId: Int)
+
     @Query("SELECT * from short_movie_info_table WHERE shortMovieId = :id")
     fun getShortInfoById(id: Int) : LiveData<ShortMovieInfo>
 
