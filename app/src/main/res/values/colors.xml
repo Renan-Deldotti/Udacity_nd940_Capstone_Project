@@ -7,4 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="checked_favorite_button">#FFF44336</color>
+    <color name="unchecked_favorite_button">#FFD6D7D7</color>
 </resources>

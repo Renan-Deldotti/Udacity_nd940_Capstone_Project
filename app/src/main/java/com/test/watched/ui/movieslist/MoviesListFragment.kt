@@ -109,13 +109,14 @@ class MoviesListFragment : Fragment() {
         requireContext().connectivityManager.requestNetwork(networkRequest, object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                Log.d(TAG, "Connection succeed, fetch data")
-                viewModel.loadNewMovieShortInfo(nextPage)
+                if (nextPage == 1) {
+                    // Only start the query if the list is empty
+                    viewModel.loadNewMovieShortInfo(nextPage)
+                }
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
-                Log.d(TAG, "Connection lost")
             }
         })
     }

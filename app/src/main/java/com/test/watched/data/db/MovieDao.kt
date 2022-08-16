@@ -16,6 +16,9 @@ interface MovieDao {
     @Query("SELECT * from movie_table WHERE id = :id")
     suspend fun getMovieById(id: Int): Movie
 
+    @Query("UPDATE movie_table SET isFavorite=:isFavorited WHERE id = :movieId")
+    suspend fun updateMovieFavoriteStatus(isFavorited: Boolean, movieId: Int)
+
     @Query("SELECT * from movie_table")
     fun getAllMovies(): LiveData<List<Movie>>
 

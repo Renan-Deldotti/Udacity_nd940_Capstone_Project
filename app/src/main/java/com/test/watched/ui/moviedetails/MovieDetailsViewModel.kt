@@ -23,7 +23,10 @@ class MovieDetailsViewModel(application: Application) : AndroidViewModel(applica
 
     val movieData: LiveData<Movie> get() = _movieData
 
-    val allMoviesData: LiveData<List<Movie>> = repository.allMoviesData
+    var buttonValue: Boolean = false
+
+    private var _isFavorited: MutableLiveData<Boolean> = MutableLiveData()
+    val isFavorited: LiveData<Boolean> get() = _isFavorited
 
     fun getDataForId(movieId: Int) {
         viewModelScope.launch {
@@ -33,12 +36,13 @@ class MovieDetailsViewModel(application: Application) : AndroidViewModel(applica
                 Toast.makeText(getApplication(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
             }
             _movieData.value = repository.getMovieById(movieId)
+            _isFavorited.value = repository.getFavoritedMovieById(movieId) != null
         }
     }
 
-    fun saveFavorite(movieToSave: Movie) {
+    fun saveFavorite() {
         viewModelScope.launch {
-            repository.insertFavoriteMovie(movieToSave)
+            repository.insertFavoriteMovie(_movieData.value!!, buttonValue)
         }
     }
 }

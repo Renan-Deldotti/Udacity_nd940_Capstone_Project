@@ -7,7 +7,6 @@ import com.test.watched.data.datamodels.Movie
 import com.test.watched.data.datamodels.ShortMovieInfo
 import com.test.watched.data.retrofit.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class MoviesRepository(private val database: MoviesDatabase) {
@@ -56,20 +55,31 @@ class MoviesRepository(private val database: MoviesDatabase) {
         return movie
     }
 
-    val allMoviesData: LiveData<List<Movie>> = database.movieDao.getAllMovies()
-
-    suspend fun insertFavoriteMovie(movie: Movie) {
+    suspend fun insertFavoriteMovie(movie: Movie, favorite: Boolean) {
         withContext(Dispatchers.IO) {
-            database.favoritesDao.insertFavoriteMovie(Favorites(movie.id!!))
-            movie.isFavorite = true
-            database.movieDao.insertMovie(movie)
-            database.shortMovieInfoDao.updateFavoriteStatus(true, movie.id!!)
+            if (favorite) {
+                database.favoritesDao.insertFavoriteMovie(Favorites(movie.id!!))
+                database.movieDao.updateMovieFavoriteStatus(true, movie.id!!)
+                database.shortMovieInfoDao.updateFavoriteStatus(true, movie.id!!)
+            } else {
+                database.favoritesDao.deleteFavoriteMovieWithId(movie.id!!)
+                database.movieDao.updateMovieFavoriteStatus(false, movie.id!!)
+                database.shortMovieInfoDao.updateFavoriteStatus(false, movie.id!!)
+            }
         }
     }
 
     val allFavoriteMoviesInfo: LiveData<List<Favorites>> = database.favoritesDao.getAllFavoritesInfo()
 
     fun getFavoriteMoviesListShortInfo(vararg moviesIds: Int) : LiveData<List<ShortMovieInfo>> = database.shortMovieInfoDao.getShortInfoByIdsAsList(*moviesIds)
+
+    suspend fun getFavoritedMovieById(movieId: Int): Favorites? {
+        val favorites: Favorites?
+        withContext(Dispatchers.IO) {
+            favorites = database.favoritesDao.getFavoritedMovieById(movieId)
+        }
+        return favorites
+    }
 
     companion object {
         private const val TAG = "MoviesRepository"

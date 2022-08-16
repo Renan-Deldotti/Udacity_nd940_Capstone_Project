@@ -16,6 +16,12 @@ interface FavoritesDao {
     @Query("SELECT * FROM favorite_movies_table")
     fun getAllFavoritesInfo(): LiveData<List<Favorites>>
 
+    @Query("SELECT * FROM favorite_movies_table WHERE shortMovieInfoId = :movieId")
+    suspend fun getFavoritedMovieById(movieId: Int) : Favorites?
+
     @Query("DELETE FROM favorite_movies_table")
     suspend fun deleteAllFavoritesInfo()
+
+    @Query("DELETE FROM favorite_movies_table WHERE shortMovieInfoId = :movieId")
+    suspend fun deleteFavoriteMovieWithId(movieId: Int)
 }

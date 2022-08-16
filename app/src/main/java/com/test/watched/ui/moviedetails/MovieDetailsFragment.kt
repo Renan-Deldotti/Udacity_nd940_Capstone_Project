@@ -1,5 +1,6 @@
 package com.test.watched.ui.moviedetails
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -8,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.color.MaterialColors
 import com.test.watched.R
 import com.test.watched.data.datamodels.Movie
 import com.test.watched.data.retrofit.RetrofitInstance
@@ -55,19 +58,30 @@ class MovieDetailsFragment : Fragment() {
             binding.movieDetailsPoster.setImageDrawable(AppCompatResources.getDrawable(binding.movieDetailsPoster.context, R.drawable.ic_movies))
         }
 
-        binding.movieDetailsWatchButton.setOnClickListener {
-            Log.d(TAG, "getMovieData: Add to watched")
-        }
+        binding.movieDetailsFavoriteButton.isEnabled = false
+        viewModel.isFavorited.observe(viewLifecycleOwner) {
+            Log.d(TAG, "setMovieData: is favorite: $it")
+            binding.movieDetailsFavoriteButton.imageTintList = if (it) {
+                ColorStateList.valueOf(resources.getColor(R.color.checked_favorite_button, null))
+            } else {
+                ColorStateList.valueOf(resources.getColor(R.color.unchecked_favorite_button, null))
+            }
 
-        Log.d(TAG, "setMovieData: is favorite: ${data.isFavorite}")
+            viewModel.buttonValue = it
 
-        binding.movieDetailsFavoriteButton.setOnClickListener {
-            Log.d(TAG, "getMovieData: Add to favorites")
-            viewModel.saveFavorite(data)
+            binding.movieDetailsFavoriteButton.setOnClickListener {
+                viewModel.buttonValue = !viewModel.buttonValue
+                viewModel.saveFavorite()
+                binding.movieDetailsFavoriteButton.imageTintList = if (viewModel.buttonValue) {
+                    ColorStateList.valueOf(resources.getColor(R.color.checked_favorite_button, null))
+                } else {
+                    ColorStateList.valueOf(resources.getColor(R.color.unchecked_favorite_button, null))
+                }
+            }
+
+            binding.movieDetailsFavoriteButton.isEnabled = true
+            binding.movieDetailsFavoriteButton.isVisible = true
         }
-        
-        binding.movieDetailsWatchButton.visibility = View.VISIBLE
-        binding.movieDetailsFavoriteButton.visibility = View.VISIBLE
 
         // Some movies does not have the data set, so just put an empty string
         binding.movieDetailsTitle.text = data.originalTitle ?: getString(R.string.no_title)
@@ -94,8 +108,6 @@ class MovieDetailsFragment : Fragment() {
             binding.movieDetailsProducedByValues.text = producedByFormattedString
         }
     }
-
-
 
     companion object {
         private const val TAG = "MovieDetailsFragment"
