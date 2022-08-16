@@ -92,3 +92,28 @@ The app contain five screens where the user can see a list of movies from an API
                 The choosen item was "Notifications". The APP send a notification daily to the user about a movie that the user might be interest and when clicking on the notification he is taken to the page about this movie
 
 This doc is also available on extra_files/
+
+Main parts of the app:
+    data/datamodels:
+        All models needed to save and convert the API response
+    db/:
+        Room implementation to allow offline caching
+    retrofit/
+        Retrofit implementation to access the API
+    notifications/ 
+        A Manager to help creating and sending notifications
+    ui/
+        about/
+            A short About screen of the app
+        favorites/
+            Handle the logic to fetch, save and get the data that the user saved (with MVVM pattern) 
+        moviedetails/
+            Handle the presentation of a movie data detailed
+        movieslist/
+            Handle the "app main screen", where the user will find all movie related info and can select to see and save them
+        settings/
+            A shor Settings screen where the user can set two preferences
+    utils/
+        Classes to help accessing methods and variables
+    res/
+        General app resources, xml files, strings, colors, dimensions, motion files, icons and navigation
