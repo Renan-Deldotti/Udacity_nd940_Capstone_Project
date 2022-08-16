@@ -93,6 +93,8 @@ The app contain five screens where the user can see a list of movies from an API
 
 This doc is also available on extra_files/
 
+API KEY can be got from https://www.themoviedb.org/signup but I also added mine to the Constants file, no problems using it
+
 Main parts of the app:
     data/datamodels:
         All models needed to save and convert the API response
