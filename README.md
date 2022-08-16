@@ -1,2 +1,94 @@
 # Udacity_nd940_Capstone_Project
 App made to complete the "Project: Capstone_Project" from Udacity Nanodegree nd940
+
+Design document
+
+Short description about the app:
+The app contain five screens where the user can see a list of movies from an API, check the movie info on details, add movies to their favorites and set some preferences to better use the app. The APP is also completely usefull ofline, once the data is fethed the user can check his favorite movies and it datails ofline.
+
+
+                        Rubrics dived by topics:
+1: Android UI/UX
+    1.1: Build a navigable interface consisting of multiple screens of functionality and data.
+    Application includes at least three screens with distinct features using either the Android Navigation Controller or Explicit Intents.
+    The Navigation Controller is used for Fragment-based navigation and intents are utilized for Activity-based navigation.
+    An application bundle is built to store data passed between Fragments and Activities.
+        Resolution:
+            The aplication uses Android Navigation Controller to controll the fragments and display the correct screen, (it can be check on navigation.xml) also, an intent was also used to launched Settings app and enable WIFI and bundle data was made with the Navigation Controller to pass the require data to other fragments (as from MoviesListFragment to MovieDetailsFragment)
+			
+	1.2: Construct interfaces that adhere to Android standards and display appropriately on screens of different size and resolution.
+    Application UI effectively utilizes ConstraintLayout to arrange UI elements effectively and efficiently across application features, avoiding nesting layouts and maintaining a flat UI structure where possible.
+    Data collections are displayed effectively, taking advantage of visual hierarchy and arrangement to display data in an easily consumable format.
+    Resources are stored appropriately using the internal res directory to store data in appropriate locations including string* values, drawables, colors, dimensions, and more.
+    Every element within ConstraintLayout should include the id field and at least 1 vertical constraint.
+    Data collections should be loaded into the application using ViewHolder pattern and appropriate View, such as RecyclerView.
+        Resolution:
+            The design is reponsible on all fragments, can be resized and display equally on all screen sizes, all elements are correctly aligned with ConstraintLayout and lists uses RecyclerView (as in MoviesListFragment)
+				
+	1.3: Animate UI components to better utilize screen real estate and create engaging content.
+    Application contains at least 1 feature utilizing MotionLayout to adapt UI elements to a given function. This could include animating control elements onto and off screen, displaying and hiding a form, or animation of complex UI transitions.
+    MotionLayout behaviors are defined in a MotionScene using one or more Transition nodes and ConstraintSet blocks.
+    Constraints are defined within the scenes and house all layout params for the animation.
+        Resolution:
+            MotionLayout was added to FavoriteFragments and it shows the RecyclerView being "slided by the left" and adding the data. Also, other fragment transaction animations were added to give more smoothness to the app
+
+
+2: Local and Network data
+    2.1: Connect to and consume data from a remote data source such as a RESTful API.
+    The Application connects to at least 1 external data source using Retrofit or other appropriate library/component and retrieves data for use within the application.
+    Data retrieved from the remote source is held in local models with appropriate data types that are readily handled and manipulated within the application source. Helper libraries such as Moshi may be used to assist with this requirement.
+    The application performs work and handles network requests on the appropriate threads to avoid stalling the UI.
+        Resolution:
+            The app uses Retrofit to consume an API that provides Movie related data and uses Gson to handle the data from the API, also, all requests were done on background threads using Coroutines and data is stored locally with Room
+				
+    2.2: Load network resources, such as Bitmap Images, dynamically and on-demand.
+    The Application loads remote resources asynchronously using an appropriate library such as Glide or other library/component when needed.
+    Images display placeholder images while being loaded and handle failed network requests gracefully.
+    All requests are performed asynchronously and handled on the appropriate threads.
+        Resolution:
+                The app uses Glide to display movies cover on all lists and details screens on background while displaying a placeholder image when the image is not loaded yet
+				
+	2.3: Store data locally on the device for use between application sessions and/or offline use.
+    The application utilizes storage mechanisms that best fit the data stored to store data locally on the device. Example: SharedPreferences for user settings or an internal database for data persistence for application data. Libraries such as Room may be utilized to achieve this functionality.
+    Data stored is accessible across user sessions
+    Data storage operations are performed on the appropriate threads as to not stall the UI thread.
+    Data is structured with appropriate data types and scope as required by application functionality.
+        Resolution:
+            Room was used to keep the movies data structured and SharedPreferences to save two user preferences, also the data is saved correctly and remains the same across sessions.
+
+
+3: Android system and hardware integration
+    3.1: Architect application functionality using MVVM.
+    Application separates responsibilities amongst classes and structures using the MVVM Pattern:
+         - Fragments/Activities control the Views
+         - Models houses the data structures,
+         - ViewModel controls business logic.
+    Application adheres to architecture best practices, such as the observer pattern, to prevent leaking components, such as Activity Contexts, and efficiently utilize system resources.
+          Resolution:
+              MVVM pattern was used to provide a fluent transition between the work on the app, all fragments contain their own logic about views, aalso Models and ViewModels were used to prevent leaks and lifecycle issues
+
+    3.2: Implement logic to handle and respond to hardware and system events that impact the Android Lifecycle.
+    Beyond MVVM, the application handles system events, such as orientation changes, application switching, notifications, and similar events gracefully including, but not limited to:
+         - Storing and restoring state and information
+         - Properly handling lifecycle events in regards to behavior and functionality
+                  - Implement bundles to restore and save data
+         - Handling interaction to and from the application via Intents
+         - Handling Android Permissions
+            Resolution: 
+                The app store data and keep it safe by using Room, ViewModel, LiveData and SharedPreferences as seen on DetailsFragment
+			
+    3.3: Utilize system hardware to provide the user with advanced functionality and features.
+        Application utilizes at least 1 hardware component to provide meaningful functionality to the application as a whole. Suggestion options include:
+                - Camera
+                - Location
+                - Accelerometer
+                - Microphone
+                - Gesture Capture
+                - Notifications
+        Permissions to access hardware features are requested at the time of use for the feature.
+        Behaviors are accessed only after permissions are granted.
+			
+            Resolution:
+                The choosen item was "Notifications". The APP send a notification daily to the user about a movie that the user might be interest and when clicking on the notification he is taken to the page about this movie
+
+This doc is also available on extra_files/
