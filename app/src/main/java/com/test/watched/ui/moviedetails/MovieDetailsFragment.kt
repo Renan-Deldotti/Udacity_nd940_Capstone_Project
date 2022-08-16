@@ -53,6 +53,7 @@ class MovieDetailsFragment : Fragment() {
             Glide.with(binding.movieDetailsPoster)
                 .load(posterUrl)
                 .placeholder(R.drawable.ic_movies)
+                .error(R.drawable.ic_download_image_error)
                 .into(binding.movieDetailsPoster)
         } else {
             binding.movieDetailsPoster.setImageDrawable(AppCompatResources.getDrawable(binding.movieDetailsPoster.context, R.drawable.ic_movies))

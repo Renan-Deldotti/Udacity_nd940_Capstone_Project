@@ -42,6 +42,7 @@ class MoviesListAdapter(private val listener: MoviesListItemListener): ListAdapt
                 Glide.with(itemBinding.smiPosterPreview)
                     .load(imagePath)
                     .placeholder(R.drawable.ic_movies)
+                    .error(R.drawable.ic_download_image_error)
                     .into(itemBinding.smiPosterPreview)
             } else {
                 Log.d("MoviesListAdapter", "bind: backdropPath is empty, using placeholder image")
