@@ -8,11 +8,13 @@ import android.net.NetworkRequest
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,16 +55,15 @@ class MoviesListFragment : Fragment() {
                 } else {
                     Toast.makeText(context, "Invalid movieId $movieId", Toast.LENGTH_SHORT).show()
                 }
-            } else if(movieId != -1 && it.isFavorite) {
-                findNavController().navigate(MoviesListFragmentDirections.actionNavMoviesToMovieDetailsFragment(movieId))
             } else {
                 // No data connectivity show the snackbar to let user know about internet
-                Snackbar.make(binding.root, R.string.no_internet_connection, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.turn_on){
+                Snackbar.make(binding.root, R.string.no_internet_connection, Snackbar.LENGTH_LONG).apply {
+                    setAction(R.string.turn_on){
                         startActivity(Intent().apply {
                             action = Settings.ACTION_WIFI_SETTINGS
                         })
-                    }.show()
+                    }
+                }.show()
             }
         })
 

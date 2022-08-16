@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         if (!hasInternetConnectivity()) {
             // Show a snackbar about the connectivity
-            Snackbar.make(binding.root, R.string.no_internet_connection, Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.mainCoordinatorLayout, R.string.no_internet_connection, Snackbar.LENGTH_LONG)
                 .setAction(R.string.turn_on){
                     startActivity(Intent().apply {
                         action = Settings.ACTION_WIFI_SETTINGS

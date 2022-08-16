@@ -31,13 +31,7 @@ class MoviesListViewModel(application: Application) : AndroidViewModel(applicati
             try {
                 repository.fetchMoviesFromApi(page, filterResults)
             } catch (e: Exception) {
-                if (page == 1) {
-                    // If this is for the first time we show the snackbar on MovieListFragment
-                    // instead of the toast
-                    Log.d(TAG, "No internet connection")
-                } else {
-                    Toast.makeText(getApplication(), R.string.no_internet_connection_load_more, Toast.LENGTH_SHORT).show()
-                }
+                Log.d(TAG, "No internet connection")
             }
         }
     }
