@@ -40,4 +40,9 @@ interface FetchAPI {
         @Query("language") language: String = "en-US"
     ): Movie
 
+    // To be used with NotificationWork
+    @GET("trending/movie/day")
+    suspend fun getTrendingMovies(
+        @Query("api_key") api_key: String = Constants.API_KEY
+    ) : MoviesList
 }

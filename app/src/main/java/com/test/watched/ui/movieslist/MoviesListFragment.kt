@@ -15,7 +15,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +27,10 @@ import com.test.watched.R
 import com.test.watched.databinding.FragmentMoviesListBinding
 import com.test.watched.utils.connectivityManager
 import com.test.watched.utils.hasInternetConnectivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import java.lang.Thread.sleep
 
 /**
  * Fragment containing a RecyclerView that displays a list of Movies
@@ -69,8 +75,26 @@ class MoviesListFragment : Fragment() {
 
         binding.moviesListRecyclerView.adapter = moviesListAdapter
 
+        lifecycleScope.launchWhenCreated {
+            withContext(Dispatchers.Default) {
+                delay(8000)
+                if (binding.moviesListProgressBar.isVisible) {
+                    withContext(Dispatchers.Main) {
+                        binding.moviesListProgressBar.visibility = View.GONE
+                        binding.moviesListErrorImageVIew.visibility = View.VISIBLE
+                        binding.moviesListNoConnectionTextView.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
         viewModel.shortMovieInfos.observe(viewLifecycleOwner) {
             moviesListAdapter.submitList(it)
+            if (it.isNotEmpty()) {
+                binding.moviesListProgressBar.visibility = View.GONE
+                binding.moviesListErrorImageVIew.visibility = View.GONE
+                binding.moviesListNoConnectionTextView.visibility = View.GONE
+            }
         }
 
         // Make the list endless

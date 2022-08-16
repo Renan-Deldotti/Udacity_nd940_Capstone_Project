@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName
  */
 @Entity(tableName = "movie_table")
 data class Movie(
+    @SerializedName("adult") @Expose var adult: Boolean? = null,
+    @SerializedName("backdrop_path") @Expose var backdropPath: String? = null,
     @SerializedName("genres") @Expose var genres: ArrayList<Genres> = arrayListOf(),
     @SerializedName("id") @Expose @PrimaryKey var id: Int? = null,
     @SerializedName("imdb_id") @Expose var imdbId: String? = null,

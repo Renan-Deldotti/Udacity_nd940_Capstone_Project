@@ -10,6 +10,9 @@ interface ShortMovieInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg shortMovieInfo: ShortMovieInfo)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertShortInfo(shortMovieInfo: ShortMovieInfo)
+
     @Update
     suspend fun update(shortMovieInfo: ShortMovieInfo)
 

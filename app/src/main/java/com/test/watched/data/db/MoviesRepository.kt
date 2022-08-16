@@ -43,7 +43,9 @@ class MoviesRepository(private val database: MoviesDatabase) {
         withContext(Dispatchers.IO) {
             lastMovieId = movieId
             val movie = RetrofitInstance.api.getMovieById(movieId.toString())
+            val shortMovieInfo = ShortMovieInfo(0,movie.adult, movie.backdropPath, movie.id, movie.originalTitle, movie.releaseDate, movie.isFavorite)
             database.movieDao.insertMovie(movie)
+            database.shortMovieInfoDao.insertShortInfo(shortMovieInfo)
         }
     }
 

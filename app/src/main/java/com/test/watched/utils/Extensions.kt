@@ -1,5 +1,7 @@
 package com.test.watched.utils
 
+import android.app.Application
+import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
@@ -18,3 +20,5 @@ fun Context.hasInternetConnectivity(): Boolean {
                 it.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
     } ?: false
 }
+
+fun Context.getNotificationManager(): NotificationManager = getSystemService(Application.NOTIFICATION_SERVICE) as NotificationManager

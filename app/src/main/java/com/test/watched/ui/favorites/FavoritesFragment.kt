@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.test.watched.R
 import com.test.watched.databinding.FragmentFavoritesBinding
 
@@ -23,7 +24,8 @@ class FavoritesFragment : Fragment() {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false)
 
         favoritesListAdapter = FavoritesListAdapter(FavoritesListAdapter.FavoriteListItemListener {
-            Log.d(TAG, "onCreateView: Clicked ${it.id}")
+            // As all data from favorites is saved we can allow the user to access the DetailsFragment
+            findNavController().navigate(FavoritesFragmentDirections.actionNavFavoritesToNavDetails(it.shortMovieId!!))
         })
 
         binding.favoritesListRecyclerView.adapter = favoritesListAdapter
@@ -33,9 +35,6 @@ class FavoritesFragment : Fragment() {
                 it.shortMovieInfoId
             }
             viewModel.favoritesMoviesShortInfo(*idsList.toIntArray()).observe(viewLifecycleOwner) { shortMovieInfoList ->
-                shortMovieInfoList.forEach { shortInfo ->
-                    Log.d(TAG, "onCreateView: ${shortInfo.originalTitle}")
-                }
                 favoritesListAdapter.submitList(shortMovieInfoList)
             }
         }

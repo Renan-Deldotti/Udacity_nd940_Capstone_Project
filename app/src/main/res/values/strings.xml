@@ -26,7 +26,9 @@
     <string name="allow_notifications_switch_text">Allow notifications</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="no_internet_connection_load_more">No internet connection to load more movies</string>
+    <string name="notification_title">Check this new movie recommendation</string>
     <string name="favorite">Favorite</string>
     <string name="favorite_button_cd">Favorite button</string>
     <string name="turn_on">Turn on</string>
+    <string name="connection_unavailable">Connection unavailable_cd</string>
 </resources>

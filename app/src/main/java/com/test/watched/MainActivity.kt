@@ -14,8 +14,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.snackbar.Snackbar
+import com.test.watched.data.datamodels.ShortMovieInfo
 import com.test.watched.data.retrofit.RetrofitInstance
 import com.test.watched.databinding.ActivityMainBinding
+import com.test.watched.notifications.WatchedNotificationManager
 import com.test.watched.utils.hasInternetConnectivity
 
 class MainActivity : AppCompatActivity() {
@@ -51,6 +53,13 @@ class MainActivity : AppCompatActivity() {
                         action = Settings.ACTION_WIFI_SETTINGS
                     })
                 }.show()
+        }
+
+        val id: Int? = intent.extras?.getInt(WatchedNotificationManager.NOTIFICATION_MOVIE_ID_EXTRA, -1)
+        id?.let {
+            if (hasInternetConnectivity() && it != -1) {
+                navController.navigate(NavigationDirections.fromNotificationToNavDetails(it))
+            }
         }
     }
 
