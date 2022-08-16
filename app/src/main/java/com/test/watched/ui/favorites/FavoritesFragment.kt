@@ -35,7 +35,14 @@ class FavoritesFragment : Fragment() {
                 it.shortMovieInfoId
             }
             viewModel.favoritesMoviesShortInfo(*idsList.toIntArray()).observe(viewLifecycleOwner) { shortMovieInfoList ->
-                favoritesListAdapter.submitList(shortMovieInfoList)
+                if (shortMovieInfoList.isNotEmpty()) {
+                    favoritesListAdapter.submitList(shortMovieInfoList)
+                    binding.favoritesListEmptyImageVIew.visibility = View.GONE
+                    binding.favoritesListEmptyTextView.visibility = View.GONE
+                } else {
+                    binding.favoritesListEmptyImageVIew.visibility = View.VISIBLE
+                    binding.favoritesListEmptyTextView.visibility = View.VISIBLE
+                }
             }
         }
 

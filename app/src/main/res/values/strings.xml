@@ -31,4 +31,6 @@
     <string name="favorite_button_cd">Favorite button</string>
     <string name="turn_on">Turn on</string>
     <string name="connection_unavailable">Connection unavailable_cd</string>
+    <string name="no_favorite_movies_stored_icon_cd">No favorite movies stored icon</string>
+    <string name="no_favorite_movies_stored">No favorite movies stored</string>
 </resources>
